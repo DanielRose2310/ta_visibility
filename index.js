@@ -33,11 +33,11 @@ function lockMapToBounds() {
     console.log(color)
     // Create a CircleMarker with the calculated color
     return L.circleMarker(latlng, {
-        radius:5,
+        radius:4,
       fillColor: color,
       color: 'black',
-      weight: 0.4,
-      fillOpacity: 0.8,
+      weight: 0.8,
+      fillOpacity: 0.9,
     });
   }
 
