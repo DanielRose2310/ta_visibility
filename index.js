@@ -1,47 +1,29 @@
-import data from './data.geojson' assert { type: 'json' };
+fetch('./data.geojson')
+    .then(response => response.json())
+    .then(data => {
+        const attributeData = data.features.map(feature => feature.properties.area_mean);
+        const minValue = Math.min(...attributeData);
+        const maxValue = Math.max(...attributeData);
 
-var map = L.map('map').setView([32.0853, 34.7818], 13);
-const initialBounds = map.getBounds();
+        function normalizeValue(value) {
+            return ((value - minValue) / (maxValue - minValue)) * 255;
+        }
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
-function lockMapToBounds() {
-    map.setMaxBounds(initialBounds);
-  }
-  map.once('moveend', lockMapToBounds);
-  map.on('move', lockMapToBounds);
-  // Function to normalize attribute values to the 0-100 range
-  const attributeData = data.features.map(feature => feature.properties.area_mean);
-  const minValue = Math.min(...attributeData);
-  const maxValue = Math.max(...attributeData);
-  
+        function getFeatureStyle(feature, latlng) {
+            const value = feature.properties.area_mean;
+            const normalizedValue = normalizeValue(value);
+            const colorValue = Math.round(255 - normalizedValue);
+            const color = `rgba(255, ${colorValue}, ${colorValue}, 1)`;
 
-  // Function to normalize attribute values to the 0-100 range
-  function normalizeValue(value) {
-    return (value - minValue) / (maxValue - minValue) * 255;
-  }
+            return L.circleMarker(latlng, {
+                radius: 4,
+                fillColor: color,
+                color: 'black',
+                weight: 0.8,
+                fillOpacity: 0.9,
+            });
+        }
 
-  // Function to set style based on the normalized attribute value
-  function getFeatureStyle(feature, latlng) {
-    const value = feature.properties.area_mean; // Change "value" to your actual attribute name
-    const normalizedValue = normalizeValue(value);
-    
-    // Set the color based on the normalized value
-    const color = `rgba(255, ${255 - normalizedValue}, ${255 - normalizedValue}, 1)`;
-    console.log(color)
-    // Create a CircleMarker with the calculated color
-    return L.circleMarker(latlng, {
-        radius:4,
-      fillColor: color,
-      color: 'black',
-      weight: 0.8,
-      fillOpacity: 0.9,
-    });
-  }
-
-  // Add GeoJSON layer with custom styles
-  L.geoJSON(data, {
-    pointToLayer: getFeatureStyle,
-  }).addTo(map);
+        L.geoJSON(data, { pointToLayer: getFeatureStyle }).addTo(map);
+    })
+    .catch(error => console.error("Error loading GeoJSON:", error));
