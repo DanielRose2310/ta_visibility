@@ -1,6 +1,16 @@
 fetch('./data.geojson')
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
+        // Check if the data is a valid GeoJSON object
+        if (!data || !data.type || data.type !== "FeatureCollection") {
+            throw new Error("Invalid GeoJSON data");
+        }
+
         const attributeData = data.features.map(feature => feature.properties.area_mean);
         const minValue = Math.min(...attributeData);
         const maxValue = Math.max(...attributeData);
