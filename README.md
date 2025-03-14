@@ -30,7 +30,7 @@ V(P) = \sum_{j=1}^{M} \mathbb{1} (z_P \geq z_{O_j \rightarrow P})
 $$
 
 Where:
-- \( \mathbb{1} \) is an **indicator function** returning **\( 1 \) if the node is totally visible from observer \( j \), \( 0 \) if totally blocked**.  
+- **\( \mathbf{1} \)** is an **indicator function** returning **1 if the node is totally visible from observer \( j \), and 0 if totally blocked**.  
 
 ### 🏙️ **Implementation for Tel Aviv**
 🔗 [Tel-Aviv Viewshed Visibility Map](https://danielrose2310.github.io/ta_visibility/)
