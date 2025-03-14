@@ -15,6 +15,50 @@ function lockMapToBounds() {
 map.once('moveend', lockMapToBounds);
 map.on('move', lockMapToBounds);
 
+// Add a title overlay to the map
+const title = L.control({ position: 'topright' });
+
+title.onAdd = function () {
+    let div = L.DomUtil.create('div', 'map-title');
+    div.innerHTML = "<h2>Tel-Aviv Viewshed Visibility Map</h2>";
+    return div;
+};
+
+title.addTo(map);
+
+// Add an informational snippet explaining visibility and raycasting
+const infoBox = L.control({ position: 'bottomleft' });
+
+infoBox.onAdd = function () {
+    let div = L.DomUtil.create('div', 'info-box');
+    div.innerHTML = `
+        <h3>What is Visibility?</h3>
+        <p>Visibility analysis determines which areas are visible from a given viewpoint. It's often used in urban planning, surveillance, and geospatial analysis.</p>
+        <h4>Computing Visibility with Raycasting:</h4>
+        <p>A common approach is raycasting, where a ray is traced from an observer \( O \) to a point \( P \), checking if an obstacle exists along the path.</p>
+        <p><strong>Mathematical Definition:</strong></p>
+        <p>Visibility \( V(P) \) is defined as:</p>
+        <p>
+        \\[
+        V(P) =
+        \\begin{cases}
+        1, & \\text{if no obstacles along } \\overrightarrow{OP} \\\\
+        0, & \\text{if an obstacle exists along } \\overrightarrow{OP}
+        \\end{cases}
+        \\]
+        </p>
+        <p>Where:</p>
+        <ul>
+            <li>\( O \) is the observer's position</li>
+            <li>\( P \) is the target point</li>
+            <li>\( \\overrightarrow{OP} \) is the ray from \( O \) to \( P \)</li>
+        </ul>
+    `;
+    return div;
+};
+
+infoBox.addTo(map);
+
 // Load the GeoJSON data using fetch
 fetch('./data.geojson')
     .then(response => {
@@ -58,3 +102,43 @@ fetch('./data.geojson')
         L.geoJSON(data, { pointToLayer: getFeatureStyle }).addTo(map);
     })
     .catch(error => console.error("Error loading GeoJSON:", error));
+
+// Add CSS styling for the title and info box
+const style = document.createElement("style");
+style.innerHTML = `
+    .map-title {
+        background: white;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+        text-align: center;
+    }
+
+    .info-box {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        font-size: 12px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+        max-width: 300px;
+    }
+
+    .info-box h3, .info-box h4 {
+        margin: 5px 0;
+    }
+
+    .info-box p, .info-box ul {
+        margin: 5px 0;
+        font-size: 12px;
+    }
+`;
+document.head.appendChild(style);
+
+// Add MathJax for LaTeX formula rendering
+const mathJaxScript = document.createElement("script");
+mathJaxScript.type = "text/javascript";
+mathJaxScript.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js";
+mathJaxScript.async = true;
+document.head.appendChild(mathJaxScript);
