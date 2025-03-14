@@ -23,17 +23,16 @@ $$
 z_{O_j \rightarrow P} = z_{O_j} + (z_T - z_{O_j}) \times \frac{d}{D}
 $$
 
-A node’s **final visibility score** is the sum of all observer contributions:
+A node’s **final visibility score** is the sum of all rays:
 
 $$
 V(P) = \sum_{j=1}^{M} \mathbb{1}(z_P \geq z_{O_j \rightarrow P})
 $$
 
 ### **Indicator Function Explanation**  
-The function **\( \mathbb{1} \)** acts as a visibility check:
-
-- **\( \mathbb{1} = 1 \)** → The node is fully visible from observer \( j \).  
-- **\( \mathbb{1} = 0 \)** → The node is fully blocked.
+The function V(P) acts as a visibility check:
+- **1** → The node is fully visible from (and to) observer \( j \).  
+- **0** → The node is fully blocked.   
 
 ### 🏙️ **Implementation for Tel Aviv**
 🔗 [Tel-Aviv Viewshed Visibility Map](https://danielrose2310.github.io/ta_visibility/)
