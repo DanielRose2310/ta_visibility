@@ -37,7 +37,6 @@ infoBox.onAdd = function () {
         <h4>Computing Visibility with Raycasting:</h4>
         <p>A common approach is raycasting, where a ray is traced from an observer \( O \) to a point \( P \), checking if an obstacle exists along the path.</p>
         <p><strong>Mathematical Definition:</strong></p>
-        <p>Visibility \( V(P) \) is defined as:</p>
         <p>
         \\[
         V(P) =
@@ -103,35 +102,50 @@ fetch('./data.geojson')
     })
     .catch(error => console.error("Error loading GeoJSON:", error));
 
-// Add CSS styling for the title and info box
+// Add CSS styling for the title and info box with transparency and glass effect
 const style = document.createElement("style");
 style.innerHTML = `
     .map-title {
-        background: white;
-        padding: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(8px);
+        padding: 12px 16px;
         font-size: 16px;
         font-weight: bold;
-        border-radius: 5px;
-        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+        border-radius: 8px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
         text-align: center;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .info-box {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px;
-        font-size: 12px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(8px);
+        padding: 12px 16px;
+        font-size: 13px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
         max-width: 300px;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .info-box h3, .info-box h4 {
         margin: 5px 0;
+        color: #ffdd57;
     }
 
     .info-box p, .info-box ul {
         margin: 5px 0;
         font-size: 12px;
+    }
+
+    .info-box pre {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 5px;
+        border-radius: 5px;
+        font-family: monospace;
+        text-align: center;
     }
 `;
 document.head.appendChild(style);
