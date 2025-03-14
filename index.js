@@ -48,10 +48,10 @@ infoBox.onAdd = function () {
         \\]
         </p>
         <p>Where:</p>
-        <ul>
-            <li>\( O \) = Observer's position</li>
-            <li>\( P \) = Target point</li>
-            <li>\( \\overrightarrow{OP} \) = Ray from \( O \) to \( P \), checked for obstacles</li>
+ <ul>
+            <li>\\( O \\) = Observer's position</li>
+            <li>\\( P \\) = Target point</li>
+            <li>\\( \\overrightarrow{OP} \\) = Ray from \\( O \\) to \\( P \\), checked for obstacles</li>
         </ul>
     `;
     return div;
