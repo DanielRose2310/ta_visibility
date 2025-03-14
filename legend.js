@@ -1,14 +1,11 @@
 (function (factory, window) {
-    // define an AMD module that relies on 'leaflet'
     if (typeof define === "function" && define.amd) {
         define(["leaflet"], factory);
 
-        // define a Common JS module that relies on 'leaflet'
     } else if (typeof exports === "object") {
         module.exports = factory(require("leaflet"));
     }
 
-    // attach your plugin to the global 'L' variable
     if (typeof window !== "undefined" && window.L) {
         factory(L);
     }
@@ -119,13 +116,7 @@
         }
     }
 
-    /**
-     * 圆心坐标：(x0,y0) 半径：r 角度(X轴顺时针旋转)：a
-     * 弧度 = 角度 * Math.PI / 180
-     * 则圆上任一点为：（x1,y1）
-     * x1   =   x0   +   r   *   Math.cos( a  * Math.PI / 180)
-     * y1   =   y0   +   r   *   Math.sin( a  * Math.PI / 180)
-     */
+
     class PolygonSymbol extends GeometricSymbol {
         _drawSymbol() {
             var ctx = (this._ctx = this._canvas.getContext("2d"));
