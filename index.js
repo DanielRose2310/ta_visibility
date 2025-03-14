@@ -26,16 +26,17 @@ title.onAdd = function () {
 
 title.addTo(map);
 
-// Add an informational snippet explaining visibility and raycasting
+// Add an informational snippet explaining viewshed visibility
 const infoBox = L.control({ position: 'bottomleft' });
 
 infoBox.onAdd = function () {
     let div = L.DomUtil.create('div', 'info-box');
     div.innerHTML = `
-        <h3>What is Visibility?</h3>
-        <p>Visibility analysis determines which areas are visible from a given viewpoint. It's often used in urban planning, surveillance, and geospatial analysis.</p>
-        <h4>Computing Visibility with Raycasting:</h4>
-        <p>A common approach is raycasting, where a ray is traced from an observer \( O \) to a point \( P \), checking if an obstacle exists along the path.</p>
+        <h3>What is Viewshed Visibility?</h3>
+        <p>Viewshed analysis determines which areas are visible from a given observer location.</p>
+        <ul>
+        <h4>Computing Viewshed with Raycasting:</h4>
+        <p>Using **raycasting**, we trace rays from an observer \( O \) to different points \( P \) on the landscape.</p>
         <p><strong>Mathematical Definition:</strong></p>
         <p>
         \\[
@@ -48,9 +49,9 @@ infoBox.onAdd = function () {
         </p>
         <p>Where:</p>
         <ul>
-            <li>\( O \) is the observer's position</li>
-            <li>\( P \) is the target point</li>
-            <li>\( \\overrightarrow{OP} \) is the ray from \( O \) to \( P \)</li>
+            <li>\( O \) = Observer's position</li>
+            <li>\( P \) = Target point</li>
+            <li>\( \\overrightarrow{OP} \) = Ray from \( O \) to \( P \), checked for obstacles</li>
         </ul>
     `;
     return div;
@@ -119,15 +120,15 @@ style.innerHTML = `
     }
 
     .info-box {
-        background: rgba(20, 20, 20, 0.6);
-        backdrop-filter: blur(8px);
-        padding: 12px 16px;
+        background: rgba(20, 20, 20, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 16px 20px;
         font-size: 13px;
-        border-radius: 8px;
-        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
-        max-width: 300px;
+        border-radius: 12px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+        max-width: 350px;
         color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .info-box h3, .info-box h4 {
@@ -140,12 +141,14 @@ style.innerHTML = `
         font-size: 12px;
     }
 
-    .info-box pre {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 5px;
-        border-radius: 5px;
-        font-family: monospace;
-        text-align: center;
+    .info-box li {
+        list-style: none;
+        margin-bottom: 4px;
+    }
+
+    .info-box li::before {
+        content: "✔️ ";
+        color: #ffdd57;
     }
 `;
 document.head.appendChild(style);
