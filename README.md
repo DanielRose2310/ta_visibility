@@ -31,8 +31,8 @@ $$
 
 ### **Indicator Function Explanation**  
 The function V(P) acts as a visibility check:
-- **0** → The node is fully visible from (and to) observer \( j \).  
-- **1** → The node is fully blocked.   
+- **1** → The node is fully visible from (and to) observer \( j \).  
+- **0** → The node is fully blocked.   
 
 ### 🏙️ **Implementation for Tel Aviv**
 🔗 [Tel-Aviv Viewshed Visibility Map](https://danielrose2310.github.io/ta_visibility/)
