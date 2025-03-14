@@ -36,8 +36,8 @@ infoBox.onAdd = function () {
         <p>Viewshed analysis determines which areas are visible from a given observer location.</p>
         <ul>
         <h4>Computing Viewshed with Raycasting:</h4>
-        <p>Using **raycasting**, we trace rays from an observer \( O \) to different points \( P \) on the landscape.</p>
-        <p><strong>Mathematical Definition:</strong></p>
+        <p>Using <strong>raycasting</strong>, we trace rays from an observer \\( O \\) to different points \\( P \\) on the landscape.</p>
+        <p><strong>Formal Definition:</strong></p>
         <p>
         \\[
         V(P) =
